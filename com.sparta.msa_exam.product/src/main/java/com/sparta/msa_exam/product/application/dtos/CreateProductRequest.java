@@ -1,7 +1,7 @@
 package com.sparta.msa_exam.product.application.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,6 +11,6 @@ public class CreateProductRequest {
 
 	@NotBlank
 	private String name;
-	@Positive
+	@PositiveOrZero
 	private int supplyPrice;
 }
