@@ -2,6 +2,25 @@ spring:
   application:
     name: order-service
 
+  profiles:
+    active: dev
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      username: default
+      password: systempass
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
 server:
   port: 19092
 
@@ -9,3 +28,56 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka
+
+resilience4j.circuitbreaker:
+  configs:
+      default:
+        registerHealthIndicator: true
+
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 20s
+
+        slowCallDurationThreshold: 5000
+        slowCallRateThreshold: 60
+
+        permittedNumberOfCallsInHalfOpenState: 5
+
+  instances:
+    OrderProductService:
+      baseConfig: default
+      slidingWindowSize: 5
+
+management:
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"
+  tracing:
+    sampling:
+      probability: 1.0
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/msa_practice
+    username: root
+    password: pass!
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+

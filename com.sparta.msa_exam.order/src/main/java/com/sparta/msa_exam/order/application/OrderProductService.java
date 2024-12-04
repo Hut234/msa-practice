@@ -1,0 +1,49 @@
+package com.sparta.msa_exam.order.application;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.sparta.msa_exam.order.application.dtos.CreateOrderRequest;
+import com.sparta.msa_exam.order.application.dtos.ProductResponse;
+import com.sparta.msa_exam.order.client.ProductServiceClient;
+import com.sparta.msa_exam.order.domain.entity.Order;
+import com.sparta.msa_exam.order.domain.entity.OrderProduct;
+import com.sparta.msa_exam.order.domain.repository.OrderProductRepository;
+import com.sparta.msa_exam.order.domain.repository.OrderRepository;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class OrderProductService {
+
+	private final ProductServiceClient productServiceClient;
+	private final OrderRepository orderRepository;
+	private final OrderProductRepository orderProductRepository;
+
+	@CircuitBreaker(name = "OrderProductService", fallbackMethod = "fallbackCreateOrderProduct")
+	public void createOrderProduct(CreateOrderRequest request, boolean fail) {
+		if (fail) throw new RuntimeException("fail test case");
+
+		List<ProductResponse> products = productServiceClient.getProducts(request.getProductIds());
+		List<OrderProduct> orderProducts = products.stream()
+			.map(product -> OrderProduct.builder()
+				.productId(product.getProductId())
+				.price(product.getSupplyPrice())
+				.build())
+			.toList();
+
+		Order order = orderRepository.save(new Order(request.getUserId()));
+
+		orderProducts.forEach(orderProduct -> orderProduct.addOrder(order));
+		orderProductRepository.saveAll(orderProducts);
+	}
+
+	private void fallbackCreateOrderProduct(Exception e) {
+		log.error("잠시 후에 주문 추가를 요청해주세요.");
+	}
+}

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sparta.msa_exam.product.application.ProductService;
@@ -30,7 +31,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/products")
-	public List<ProductResponse> getProducts(Pageable pageable) {
-		return productService.getProducts(pageable);
+	public ResponseEntity<List<ProductResponse>> getProducts(Pageable pageable) {
+		return ResponseEntity.ok(productService.getProducts(pageable));
+	}
+
+	@GetMapping("/products/ids")
+	public ResponseEntity<List<ProductResponse>> getProducts(@RequestParam List<Long> id) {
+		return ResponseEntity.ok(productService.getProducts(id));
 	}
 }

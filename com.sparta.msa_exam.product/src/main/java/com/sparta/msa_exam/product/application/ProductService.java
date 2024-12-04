@@ -42,6 +42,12 @@ public class ProductService {
 			.toList();
 	}
 
+	public List<ProductResponse> getProducts(List<Long> ids) {
+		return productRepository.findAllById(ids).stream()
+			.map(ProductResponse::from)
+			.toList();
+	}
+
 	private void validateProductInfo(String name) {
 		if (productRepository.existsByName(name)) {
 			throw new CustomException(HttpStatus.CONFLICT, "이미 존재하는 상품입니다.");
