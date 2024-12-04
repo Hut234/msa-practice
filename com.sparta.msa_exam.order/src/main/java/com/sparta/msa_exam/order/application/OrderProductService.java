@@ -2,6 +2,7 @@ package com.sparta.msa_exam.order.application;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,7 @@ public class OrderProductService {
 		orderProductRepository.saveAll(orderProducts);
 	}
 
+	@CacheEvict(cacheNames = "orderCache", key = "args[0]")
 	public void addOrderProduct(Long orderId, UpdateOrderRequest request) {
 		Order order = orderRepository.findById(orderId)
 			.orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "존재하지 않는 주문입니다."));

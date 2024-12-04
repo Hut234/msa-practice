@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.product.config;
+package com.sparta.msa_exam.order.config;
 
 import static org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair.*;
 
@@ -21,7 +21,7 @@ public class CacheConfig {
 	public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
 			.disableCachingNullValues()
-			.entryTtl(Duration.ofSeconds(100))
+			.entryTtl(Duration.ofSeconds(60))
 			.computePrefixWith(CacheKeyPrefix.simple())
 			.serializeValuesWith(fromSerializer(RedisSerializer.json()));
 
