@@ -48,6 +48,11 @@ public class ProductService {
 			.toList();
 	}
 
+	public ProductResponse getProduct(Long productId) {
+		return ProductResponse.from(productRepository.findById(productId)
+			.orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "존재하지 않는 상품입니다.")));
+	}
+
 	private void validateProductInfo(String name) {
 		if (productRepository.existsByName(name)) {
 			throw new CustomException(HttpStatus.CONFLICT, "이미 존재하는 상품입니다.");

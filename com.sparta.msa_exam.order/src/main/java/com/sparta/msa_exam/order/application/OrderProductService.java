@@ -2,11 +2,14 @@ package com.sparta.msa_exam.order.application;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.sparta.msa_exam.order.application.dtos.CreateOrderRequest;
 import com.sparta.msa_exam.order.application.dtos.ProductResponse;
+import com.sparta.msa_exam.order.application.dtos.UpdateOrderRequest;
 import com.sparta.msa_exam.order.client.ProductServiceClient;
+import com.sparta.msa_exam.order.common.exception.CustomException;
 import com.sparta.msa_exam.order.domain.entity.Order;
 import com.sparta.msa_exam.order.domain.entity.OrderProduct;
 import com.sparta.msa_exam.order.domain.repository.OrderProductRepository;
@@ -41,6 +44,21 @@ public class OrderProductService {
 
 		orderProducts.forEach(orderProduct -> orderProduct.addOrder(order));
 		orderProductRepository.saveAll(orderProducts);
+	}
+
+	public void addOrderProduct(Long orderId, UpdateOrderRequest request) {
+		Order order = orderRepository.findById(orderId)
+			.orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "존재하지 않는 주문입니다."));
+
+		ProductResponse product = productServiceClient.getProduct(request.getProductId());
+
+		OrderProduct orderProduct = OrderProduct.builder()
+			.productId(product.getProductId())
+			.price(product.getSupplyPrice())
+			.build();
+
+		orderProduct.addOrder(order);
+		orderProductRepository.save(orderProduct);
 	}
 
 	private void fallbackCreateOrderProduct(Exception e) {
