@@ -2,9 +2,39 @@ spring:
   application:
     name: gateway
 
+  profiles:
+    include: jwt
+
   cloud:
     gateway:
       routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+            - Method=POST
+
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+            - Method=GET
+          filters:
+            - JwtAuthenticationFilter
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/products/**
+          filters:
+            - JwtAuthenticationFilter
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/orders/**
+          filters:
+            - JwtAuthenticationFilter
 
 server:
   port: 19091

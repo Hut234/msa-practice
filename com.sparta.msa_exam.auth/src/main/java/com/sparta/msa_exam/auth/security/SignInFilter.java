@@ -2,7 +2,6 @@ package com.sparta.msa_exam.auth.security;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,8 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class SignInFilter extends UsernamePasswordAuthenticationFilter {
 
-	@Value("${server.port}")
-	private String port;
 	private final JwtTokenProvider jwtTokenProvider;
 
 	public SignInFilter(JwtTokenProvider jwtTokenProvider) {
@@ -41,6 +38,5 @@ public class SignInFilter extends UsernamePasswordAuthenticationFilter {
 		UserDetailsImpl userDetails = (UserDetailsImpl)authResult.getPrincipal();
 		String token = jwtTokenProvider.createToken(userDetails.getUsername());
 		response.addHeader(HttpHeaders.AUTHORIZATION, token);
-		response.addHeader("Server-Port", port);
 	}
 }

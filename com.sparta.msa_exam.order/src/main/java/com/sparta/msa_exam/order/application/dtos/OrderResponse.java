@@ -8,8 +8,10 @@ import com.sparta.msa_exam.order.domain.entity.OrderProduct;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class OrderResponse implements Serializable {
 
@@ -25,6 +27,7 @@ public class OrderResponse implements Serializable {
 	}
 
 	@Getter
+	@NoArgsConstructor
 	@AllArgsConstructor
 	private static class ProductInfo implements Serializable {
 		private Long productId;
@@ -35,3 +38,4 @@ public class OrderResponse implements Serializable {
 		}
 	}
 }
+
