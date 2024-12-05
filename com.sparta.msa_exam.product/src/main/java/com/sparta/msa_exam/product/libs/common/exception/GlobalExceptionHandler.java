@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.product.common.exception;
+package com.sparta.msa_exam.product.libs.common.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

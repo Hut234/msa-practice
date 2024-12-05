@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sparta.msa_exam.auth.application.dtos.CreateUserRequest;
-import com.sparta.msa_exam.auth.common.exception.CustomException;
+import com.sparta.msa_exam.auth.libs.common.exception.CustomException;
 import com.sparta.msa_exam.auth.domain.entity.User;
 import com.sparta.msa_exam.auth.domain.repository.UserRepository;
 

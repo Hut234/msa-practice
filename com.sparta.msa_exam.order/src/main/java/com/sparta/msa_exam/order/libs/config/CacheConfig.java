@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.order.config;
+package com.sparta.msa_exam.order.libs.config;
 
 import static org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair.*;
 

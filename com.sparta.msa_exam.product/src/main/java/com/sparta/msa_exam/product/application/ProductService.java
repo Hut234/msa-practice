@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sparta.msa_exam.product.application.dtos.CreateProductRequest;
 import com.sparta.msa_exam.product.application.dtos.ProductResponse;
-import com.sparta.msa_exam.product.common.exception.CustomException;
+import com.sparta.msa_exam.product.libs.common.exception.CustomException;
 import com.sparta.msa_exam.product.domain.entity.Product;
 import com.sparta.msa_exam.product.domain.repository.ProductRepository;
 

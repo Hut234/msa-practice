@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.order.common.exception;
+package com.sparta.msa_exam.order.libs.common.exception;
 
 import org.springframework.http.HttpStatus;
 

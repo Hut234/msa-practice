@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.order.client;
+package com.sparta.msa_exam.order.ui.infra.client;
 
 import java.util.List;
 

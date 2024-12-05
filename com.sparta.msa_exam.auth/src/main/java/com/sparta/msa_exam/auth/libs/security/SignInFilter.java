@@ -1,4 +1,4 @@
-package com.sparta.msa_exam.auth.security;
+package com.sparta.msa_exam.auth.libs.security;
 
 import java.io.IOException;
 
