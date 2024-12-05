@@ -22,13 +22,6 @@ spring:
           filters:
             - JwtAuthenticationFilter
 
-        - id: product-service
-          uri: lb://product-service
-          predicates:
-            - Path=/products/**
-          filters:
-            - JwtAuthenticationFilter
-
         - id: order-service
           uri: lb://order-service
           predicates:
