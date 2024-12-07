@@ -64,5 +64,6 @@ public class OrderProductService {
 
 	private void fallbackCreateOrderProduct(Exception e) {
 		log.error("잠시 후에 주문 추가를 요청해주세요.");
+		throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "잠시 후에 주문 추가를 요청해주세요.");
 	}
 }
