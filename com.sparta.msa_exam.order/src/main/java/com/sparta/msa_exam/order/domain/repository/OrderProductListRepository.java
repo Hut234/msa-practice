@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sparta.msa_exam.order.domain.entity.OrderProduct;
 
-public interface OrderProductRepository extends JpaRepository<OrderProduct, Long> {
+public interface OrderProductListRepository extends JpaRepository<OrderProduct, Long> {
 }
